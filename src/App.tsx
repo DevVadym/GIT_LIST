@@ -1,16 +1,15 @@
-import React from 'react';
-import './App.css';
-import {Main} from "./components/Main";
-import {Container} from "@mui/material";
+import React from "react"
+import "./App.css"
+import { Main } from "./components/Main"
+import { Container } from "@mui/material"
 
-function App() {
+export const App: React.FC = () => {
     return (
         <div className="App">
-            <Container style={{backgroundColor:"beige"}}>
+            <Container>
                 <Main/>
             </Container>
         </div>
-    );
+    )
 }
 
-export default App;
