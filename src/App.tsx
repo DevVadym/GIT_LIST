@@ -6,7 +6,7 @@ import { Container } from "@mui/material"
 function App() {
     return (
         <div className="App">
-            <Container style={{backgroundColor: "beige"}}>
+            <Container>
                 <Main/>
             </Container>
         </div>

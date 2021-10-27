@@ -1,10 +1,10 @@
 import React from "react"
-import { HomePage } from "./Home/Home"
+import { Login } from "./Login/Login"
 
 export const Main: React.FC = () => {
     return (
         <div>
-            <HomePage/>
+            <Login/>
         </div>
     )
 }
