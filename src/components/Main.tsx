@@ -4,8 +4,6 @@ import { Login } from "./Login"
 import { Profile } from "./Profile"
 
 export const Main: React.FC = () => {
-
-
     return (
         <div>
             <Switch>
