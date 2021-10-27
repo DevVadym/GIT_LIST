@@ -8,6 +8,29 @@ export const Form = () => {
 
     const phoneRegExp = /^(\s*)?(\+)?([- _():=+]?\d[- _():=+]?){10,14}(\s*)?$/
 
+    let validationSchema = Yup.object().shape({
+            name: Yup.string()
+                .max(15, "Must be 15 characters or less")
+                .required(),
+            last_name: Yup.string()
+                .max(15, "Must be 15 characters or less")
+                .required(),
+            email: Yup.string()
+                .email("Invalid email address")
+                .required("Email is require"),
+            tel: Yup.string()
+                .matches(phoneRegExp, "invalid phone number")
+                .required("Please input number"),
+            password: Yup.string()
+                .min(10, "Must be 10 characters or more")
+                .required("Password is require field"),
+            repeat_password: Yup.string()
+                .oneOf([Yup.ref("password"), null], "Passwords must match")
+                .required("Please confirm password"),
+            date: Yup.date()
+        }
+    )
+
     const formik = useFormik({
         initialValues: {
             name: "",
@@ -18,50 +41,7 @@ export const Form = () => {
             repeat_password: "",
             date: ""
         },
-        validationSchema: Yup.object().shape({
-                name: Yup.string()
-                    .max(15, "Must be 15 characters or less")
-                    .min(6, "shortly"),
-                last_name: Yup.string()
-                    .max(15, "Must be 15 characters or less")
-                    .min(6, "shortly")
-                    .when("last_name", {
-                        is: (value: string) => value?.length,
-                        then: rule => rule.required()
-                    }),
-                email: Yup.string()
-                    .email("Invalid email address")
-                    .when("email", {
-                        is: (value: string) => value?.length,
-                        then: rule => rule.required()
-                    }),
-                tel: Yup.string().matches(phoneRegExp, "invalid phone number")
-                    .when("tel", {
-                        is: (value: string) => value?.length,
-                        then: rule => rule.required()
-                    }),
-                password: Yup.string()
-                    .min(10, "Must be 10 characters or more")
-                    .when("password", {
-                        is: (value: string) => value?.length,
-                        then: rule => rule.required()
-                    }),
-                repeat_password: Yup.string()
-                    .oneOf([Yup.ref("password"), null], "Passwords must match")
-                    .when("repeat_password", {
-                        is: (value: string) => value?.length,
-                        then: rule => rule.required()
-                    }),
-                date: Yup.date()
-            },
-            [
-                ["last_name", "last_name"],
-                ["email", "email"],
-                ["tel", "tel"],
-                ["password", "password"],
-                ["repeat_password", "repeat_password"],
-            ]
-        ),
+        validationSchema,
         onSubmit: (values, e) => {
             e.resetForm()
             alert(JSON.stringify(values))
@@ -76,33 +56,34 @@ export const Form = () => {
                 fullWidth
                 label="Name"
                 autoFocus
-                error={!!formik.errors.name}
-                helperText={formik.errors.name}
+                error={!!formik.errors.name && formik.touched.name}
+                helperText={formik.touched.name && formik.errors.name}
             />
+
             <TextField
                 {...formik.getFieldProps("last_name")}
                 margin="normal"
                 fullWidth
                 required
                 label="Last_name"
-                error={!!formik.errors.last_name}
-                helperText={formik.errors.last_name}
+                error={!!formik.errors.last_name && formik.touched.last_name}
+                helperText={formik.touched.last_name && formik.errors.last_name}
             />
             <TextField
                 {...formik.getFieldProps("email")}
                 margin="normal"
                 fullWidth
                 label="Email Address"
-                error={!!formik.errors.email}
-                helperText={formik.errors.email}
+                error={!!formik.errors.email && formik.touched.email}
+                helperText={formik.touched.email && formik.errors.email}
             />
             <TextField
                 {...formik.getFieldProps("tel")}
                 margin="normal"
                 fullWidth
                 label="Tel number"
-                error={!!formik.errors.tel}
-                helperText={formik.errors.tel}
+                error={!!formik.errors.tel && formik.touched.tel}
+                helperText={formik.touched.tel && formik.errors.tel}
             />
             <TextField
                 {...formik.getFieldProps("password")}
@@ -110,8 +91,8 @@ export const Form = () => {
                 fullWidth
                 label="Password"
                 type="password"
-                error={!!formik.errors.password}
-                helperText={formik.errors.password}
+                error={!!formik.errors.password && formik.touched.password}
+                helperText={formik.touched.password && formik.errors.password}
             />
             <TextField
                 {...formik.getFieldProps("repeat_password")}
@@ -119,8 +100,8 @@ export const Form = () => {
                 fullWidth
                 label="repeat_password"
                 type="password"
-                error={!!formik.errors.repeat_password}
-                helperText={formik.errors.repeat_password}
+                error={!!formik.errors.repeat_password && formik.touched.repeat_password}
+                helperText={formik.touched.repeat_password && formik.errors.repeat_password}
             />
             <TextField
                 {...formik.getFieldProps("date")}
