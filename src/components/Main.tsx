@@ -1,10 +1,15 @@
-import React from "react"
-import { Login } from "./Login/Login"
+import React  from "react"
+import { Route, Switch } from "react-router-dom"
+import { Login } from "./Login"
+import { Profile } from "./Profile"
 
 export const Main: React.FC = () => {
     return (
         <div>
-            <Login/>
+            <Switch>
+                <Route exact path={"/"} render={() => <Login/>}/>
+                <Route path={"/profile"} render={() => <Profile/>}/>
+            </Switch>
         </div>
     )
 }
