@@ -6,6 +6,10 @@ import Typography from "@mui/material/Typography"
 import Container from "@mui/material/Container"
 import { createTheme, ThemeProvider } from "@mui/material/styles"
 import { Form } from "./Form"
+import { useSelector } from "react-redux"
+import { RootState } from "../../redux/store"
+import { RegistrationSuccessType } from "./registrationSlice/registerSlice"
+import { Redirect } from "react-router-dom"
 
 function Copyright(props: any) {
     return (
@@ -24,6 +28,12 @@ const theme = createTheme()
 
 export const Registration: React.FC = () => {
 
+    const isRegister = useSelector<RootState, RegistrationSuccessType>(state=>state.registration.isRegistrationSuccess)
+
+    if (isRegister === "success") {
+        return <Redirect to={"/login"}/>
+    }
+
     return (
         <ThemeProvider theme={theme}>
             <Container component="main" maxWidth={"xs"}>
@@ -39,6 +49,7 @@ export const Registration: React.FC = () => {
                     <Typography component="h1" variant="h5">
                         Sign up
                     </Typography>
+                    {isRegister === "false" && <div style={{color:"red"}}>User already registered, please enter new data </div>}
                     <Form />
                 </Box>
                 <Copyright sx={{mt: 8, mb: 4}}/>
