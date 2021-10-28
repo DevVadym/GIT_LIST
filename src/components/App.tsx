@@ -1,8 +1,8 @@
 import React from "react"
-import "./App.css"
-import { Main } from "./components/Main/Main"
+import "../common/App.css"
+import { Main } from "./Main/Main"
 import { Container } from "@mui/material"
-import { Header } from "./components/Header/Header"
+import { Header } from "./Header/Header"
 
 export const App: React.FC = () => {
     return (
