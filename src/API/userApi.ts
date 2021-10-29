@@ -6,6 +6,7 @@ export type UserType = {
     password: string
     repeat_password: string
     date: string
+    id: string
 }
 
 export type LoginDataType = {
@@ -46,10 +47,16 @@ const isUserRegistered = (data: LoginDataType): string | LoginResponseType => {
     let users = getUsersFromLs()
     let user = users.find(u => u.email === data.email && u.password === data.password)
     if (user) {
+        localStorage.setItem("login_user", JSON.stringify(user))
         return {user, text: "success", rememberMe: data.rememberMe}
     } else {
         return "Failed login"
     }
+}
+
+const isUserLogin = () => {
+    let user = localStorage.getItem("login_user")
+    return !!user;
 }
 
 export const userApi = {
@@ -58,5 +65,8 @@ export const userApi = {
     },
     getUser(data: LoginDataType) {
         return isUserRegistered(data)
+    },
+    initializeUser(){
+        return isUserLogin()
     }
 }

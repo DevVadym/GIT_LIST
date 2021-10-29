@@ -4,16 +4,16 @@ import FormControlLabel from "@mui/material/FormControlLabel"
 import Checkbox from "@mui/material/Checkbox"
 import Button from "@mui/material/Button"
 import Grid from "@mui/material/Grid"
-import Link from "@mui/material/Link"
 import Box from "@mui/material/Box"
 import { useFormik } from "formik"
 import { useDispatch } from "react-redux"
 import { loginThunk } from "./loginSlice/loginThunk"
+import { NavLink } from "react-router-dom"
 
 type LoginFormPropsType = {
     style: any
 }
-export const LoginForm:React.FC<LoginFormPropsType> = ({style}) => {
+export const LoginForm: React.FC<LoginFormPropsType> = ({style}) => {
     const dispatch = useDispatch()
 
     const formik = useFormik({
@@ -29,7 +29,7 @@ export const LoginForm:React.FC<LoginFormPropsType> = ({style}) => {
         }
     })
 
-    return(
+    return (
         <>
             <Box component="form" onSubmit={formik.handleSubmit} noValidate sx={style.mainFormBox}>
                 <TextField
@@ -69,14 +69,15 @@ export const LoginForm:React.FC<LoginFormPropsType> = ({style}) => {
                 </Button>
                 <Grid container>
                     <Grid item xs>
-                        <Link href="#" variant="body2">
+                        <NavLink to={"#"} style={{fontSize: "0.875rem", textDecoration: "none", color: "#1976d2"}}>
                             Forgot password?
-                        </Link>
+                        </NavLink>
                     </Grid>
                     <Grid item>
-                        <Link href="#" variant="body2">
+                        <NavLink to={"/registration"}
+                                 style={{fontSize: "0.875rem", textDecoration: "none", color: "#1976d2"}}>
                             {"Don't have an account? Sign Up"}
-                        </Link>
+                        </NavLink>
                     </Grid>
                 </Grid>
             </Box>

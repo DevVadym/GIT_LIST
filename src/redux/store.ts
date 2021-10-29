@@ -2,12 +2,14 @@ import { configureStore } from "@reduxjs/toolkit"
 import loginReducer from "../components/Login/loginSlice/loginSlice"
 import appReducer from "../components/appSlice"
 import registerReducer from "../components/Register/registrationSlice/registerSlice"
+import homePageReducer from "../components/Home/homePageSlice/homePageSlice"
 
 export const store = configureStore({
     reducer: {
         login: loginReducer,
         app: appReducer,
-        registration: registerReducer
+        registration: registerReducer,
+        home: homePageReducer
     }
 })
 

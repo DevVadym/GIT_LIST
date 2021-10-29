@@ -1,18 +1,24 @@
 import { createSlice } from "@reduxjs/toolkit"
+import { appThunk } from "./appThunk"
+
+type InitializeType = "success" | "false" | null
 
 export type initialStateType = {
-
+    initialize: InitializeType
 }
 
 const initialState: initialStateType = {
-
+    initialize: null,
 }
 
 const appSlice = createSlice({
     name: "app",
     initialState,
-    reducers: {
+    reducers: {},
+    extraReducers: (builder) => {
+        builder.addCase(appThunk.fulfilled, (state, {payload}) => {
 
+        })
     }
 })
 

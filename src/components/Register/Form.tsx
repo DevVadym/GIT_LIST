@@ -5,6 +5,7 @@ import { useFormik } from "formik"
 import * as Yup from "yup"
 import { useDispatch } from "react-redux"
 import { addUserThunk } from "./registrationSlice/registrationThunk"
+import { v1 } from "uuid"
 
 export const Form = () => {
 
@@ -45,8 +46,9 @@ export const Form = () => {
         },
         validationSchema,
         onSubmit: (values, e) => {
+            let user = {...values, id: v1()}
             e.resetForm()
-            dispatch(addUserThunk(values))
+            dispatch(addUserThunk(user))
         }
     })
 
