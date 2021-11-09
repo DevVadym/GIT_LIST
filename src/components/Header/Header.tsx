@@ -4,6 +4,8 @@ import Box from "@mui/material/Box"
 import Toolbar from "@mui/material/Toolbar"
 import Typography from "@mui/material/Typography"
 import Button from "@mui/material/Button"
+import {useSelector} from "react-redux"
+import {RootState} from "../../redux/store"
 
 const style = {
     commonStyle: {
@@ -27,6 +29,8 @@ const style = {
 } as const
 
 export const Header: React.FC = () => {
+    const isLoginUser = useSelector<RootState, boolean | null>(state=>state.home.initUser)
+
     return (
         <Box>
             <AppBar sx={style.commonStyle} position="static">
@@ -34,7 +38,7 @@ export const Header: React.FC = () => {
                     <Typography variant="h5" component="div" sx={style.siteTitle}>
                        <span>InCodeApp</span>
                     </Typography>
-                    <Button variant={"contained"} color={"secondary"}>Login</Button>
+                    {isLoginUser && <Button variant={"contained"} color={"secondary"}>Logout</Button>}
                 </Toolbar>
             </AppBar>
         </Box>

@@ -1,4 +1,4 @@
-import React, { useMemo } from "react"
+import React from "react"
 import Avatar from "@mui/material/Avatar"
 import CssBaseline from "@mui/material/CssBaseline"
 import Link from "@mui/material/Link"
@@ -74,7 +74,7 @@ export const Login: React.FC = () => {
                         <Typography component="h1" variant="h5">
                             Sign in
                         </Typography>
-                        {status === "failed" && <div>Worn email or password</div>}
+                        {status === "failed" && <div>Wrong email or password</div>}
                         <LoginForm style={style.mainFormBox_button}/>
                     </Box>
                     <Copyright sx={style.mainCopyright}/>

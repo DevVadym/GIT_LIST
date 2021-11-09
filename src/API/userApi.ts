@@ -1,3 +1,5 @@
+import { v1 } from "uuid"
+
 export type UserType = {
     name: string
     last_name: string
@@ -19,6 +21,11 @@ export type LoginResponseType = {
     user: UserType
     rememberMe: boolean
     text: "success"
+}
+
+const createLoginToken = (data: string) => {
+    const token = {data, id: v1(), date: new Date().toLocaleTimeString()}
+    localStorage.setItem("token", JSON.stringify(token))
 }
 
 const getUsersFromLs = (): UserType[] => {
@@ -56,7 +63,7 @@ const isUserRegistered = (data: LoginDataType): string | LoginResponseType => {
 
 const isUserLogin = () => {
     let user = localStorage.getItem("login_user")
-    return !!user;
+    return !!user
 }
 
 export const userApi = {
@@ -66,7 +73,7 @@ export const userApi = {
     getUser(data: LoginDataType) {
         return isUserRegistered(data)
     },
-    initializeUser(){
+    initializeUser() {
         return isUserLogin()
     }
 }

@@ -1,11 +1,10 @@
-import React, { useEffect } from "react"
-import { useDispatch, useSelector } from "react-redux"
+import React from "react"
+import { useSelector } from "react-redux"
 import { RootState } from "../../redux/store"
 import { Redirect } from "react-router-dom"
 import s from "./Home.module.css"
 import { User } from "../User/User"
 import { TextField } from "@mui/material"
-import { homePageThunk } from "./homePageSlice/homePageThunk"
 
 const style = {
     mainBox: {
@@ -22,11 +21,6 @@ const style = {
 
 export const HomePage: React.FC = () => {
     const isLoginUser = useSelector<RootState, boolean>(state => state.home.initUser)
-    const dispatch = useDispatch()
-
-    useEffect(()=>{
-        dispatch(homePageThunk())
-    },[isLoginUser])
 
     if (!isLoginUser) {
         return <Redirect to={"/login"}/>
