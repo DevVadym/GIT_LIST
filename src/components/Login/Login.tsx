@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useMemo } from "react"
 import Avatar from "@mui/material/Avatar"
 import CssBaseline from "@mui/material/CssBaseline"
 import Link from "@mui/material/Link"
@@ -54,29 +54,32 @@ const style = {
 
 export const Login: React.FC = () => {
     let status = useSelector<RootState, StatusType>(state => state.login.status)
+    const isLoginUser = useSelector<RootState, boolean>(state => state.home.initUser)
 
-    if (status === "finished") {
+    if (status === "finished" && isLoginUser) {
         return <Redirect to={"/"}/>
     }
 
     return (
-        <ThemeProvider theme={theme}>
-            <Container component="main" maxWidth="xs">
-                <CssBaseline/>
-                <Box
-                    sx={style.mainBox}
-                >
-                    <Avatar sx={style.mainBox_avatar}>
-                        <LockOutlinedIcon/>
-                    </Avatar>
-                    <Typography component="h1" variant="h5">
-                        Sign in
-                    </Typography>
-                    {status === "failed" && <div>Worn email or password</div>}
-                    <LoginForm style={style.mainFormBox_button}/>
-                </Box>
-                <Copyright sx={style.mainCopyright}/>
-            </Container>
-        </ThemeProvider>
+        <div>
+            <ThemeProvider theme={theme}>
+                <Container component="main" maxWidth="xs">
+                    <CssBaseline/>
+                    <Box
+                        sx={style.mainBox}
+                    >
+                        <Avatar sx={style.mainBox_avatar}>
+                            <LockOutlinedIcon/>
+                        </Avatar>
+                        <Typography component="h1" variant="h5">
+                            Sign in
+                        </Typography>
+                        {status === "failed" && <div>Worn email or password</div>}
+                        <LoginForm style={style.mainFormBox_button}/>
+                    </Box>
+                    <Copyright sx={style.mainCopyright}/>
+                </Container>
+            </ThemeProvider>
+        </div>
     )
 }

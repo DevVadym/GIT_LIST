@@ -4,32 +4,37 @@ import Box from "@mui/material/Box"
 import Toolbar from "@mui/material/Toolbar"
 import Typography from "@mui/material/Typography"
 import Button from "@mui/material/Button"
-import IconButton from "@mui/material/IconButton"
-import MenuIcon from "@mui/icons-material/Menu"
 
 const style = {
-    commonStyle: {flexGrow: 1},
-    headerIconButton: {mr: 2}
+    commonStyle: {
+        flexGrow: 1,
+        width: "100%",
+        height:"70px",
+        zIndex: "2000",
+        position: "fixed"
+    },
+    headerIconButton: {
+        mr: 2
+    },
+    siteTitle: {
+        position: "relative",
+        height: "70px",
+        width: "100%",
+        display:"flex",
+
+        alignItems: "center"
+    }
 } as const
 
 export const Header: React.FC = () => {
     return (
-        <Box sx={style.commonStyle}>
-            <AppBar position="static">
+        <Box>
+            <AppBar sx={style.commonStyle} position="static">
                 <Toolbar>
-                    <IconButton
-                        size="large"
-                        edge="start"
-                        color="inherit"
-                        aria-label="menu"
-                        sx={style.headerIconButton}
-                    >
-                        <MenuIcon/>
-                    </IconButton>
-                    <Typography variant="h6" component="div" sx={style.commonStyle}>
-                        InCodeApp
+                    <Typography variant="h5" component="div" sx={style.siteTitle}>
+                       <span>InCodeApp</span>
                     </Typography>
-                    <Button color="inherit">Login</Button>
+                    <Button variant={"contained"} color={"secondary"}>Login</Button>
                 </Toolbar>
             </AppBar>
         </Box>

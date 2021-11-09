@@ -1,0 +1,15 @@
+.post_block {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+}
+
+.post_block__input {
+    width: 100%;
+    padding: 10px 50px 10px 0;
+    display: flex;
+    justify-content: flex-end;
+}
+.post_block__posts {
+    width: 100%;
+}

@@ -1,4 +1,11 @@
 .App {
-  text-align: center;
+    display: block;
+    position: absolute;
+    width: 100%;
 }
 
+.main_container {
+    position: relative;
+    top: 70px;
+    left: 240px;
+}

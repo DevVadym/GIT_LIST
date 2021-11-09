@@ -1,0 +1,8 @@
+.sidebar.sidebar {
+    z-index: -1;
+}
+
+.toolbar.toolbar {
+    height: 70px;
+    padding: 0;
+}

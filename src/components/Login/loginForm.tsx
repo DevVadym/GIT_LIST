@@ -9,6 +9,7 @@ import { useFormik } from "formik"
 import { useDispatch } from "react-redux"
 import { loginThunk } from "./loginSlice/loginThunk"
 import { NavLink } from "react-router-dom"
+import { homePageThunk } from "../Home/homePageSlice/homePageThunk"
 
 type LoginFormPropsType = {
     style: any
@@ -26,6 +27,7 @@ export const LoginForm: React.FC<LoginFormPropsType> = ({style}) => {
         onSubmit: (values, e) => {
             e.resetForm()
             dispatch(loginThunk(values))
+            dispatch(homePageThunk())
         }
     })
 

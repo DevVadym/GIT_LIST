@@ -16,6 +16,7 @@ const initialState: initialStateType = {
     rememberMe: null,
     status: null
 }
+
 const loginSlice = createSlice({
     name: "Login",
     initialState,

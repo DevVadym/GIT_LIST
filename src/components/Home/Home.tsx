@@ -1,14 +1,11 @@
-import React from "react"
-import Button from "@mui/material/Button"
-import Stack from "@mui/material/Stack"
-import Box from "@mui/material/Box"
-import Typography from "@mui/material/Typography"
-import Container from "@mui/material/Container"
-import { HomeFooter } from "./Footer"
-import { Cards } from "./Cards"
-import { useSelector } from "react-redux"
+import React, { useEffect } from "react"
+import { useDispatch, useSelector } from "react-redux"
 import { RootState } from "../../redux/store"
 import { Redirect } from "react-router-dom"
+import s from "./Home.module.css"
+import { User } from "../User/User"
+import { TextField } from "@mui/material"
+import { homePageThunk } from "./homePageSlice/homePageThunk"
 
 const style = {
     mainBox: {
@@ -25,46 +22,27 @@ const style = {
 
 export const HomePage: React.FC = () => {
     const isLoginUser = useSelector<RootState, boolean>(state => state.home.initUser)
+    const dispatch = useDispatch()
 
+    useEffect(()=>{
+        dispatch(homePageThunk())
+    },[isLoginUser])
 
-    if (isLoginUser) {
+    if (!isLoginUser) {
         return <Redirect to={"/login"}/>
     }
 
-
     return (
-        <main>
-            <Box sx={style.mainBox}>
-                <Container maxWidth="sm">
-                    <Typography
-                        component="h1"
-                        variant="h2"
-                        align="center"
-                        color="text.primary"
-                        gutterBottom
-                    >
-                        Album layout
-                    </Typography>
-                    <Typography variant="h5" align="center" color="text.secondary" paragraph>
-                        Something short and leading about the collection below—its contents,
-                        the creator, etc. Make it short and sweet, but not too short so folks
-                        don&apos;t simply skip over it entirely.
-                    </Typography>
-                    <Stack
-                        sx={style.mainBoxStack}
-                        direction="row"
-                        spacing={2}
-                        justifyContent="center"
-                    >
-                        <Button variant="contained">Main call to action</Button>
-                        <Button variant="outlined">Secondary action</Button>
-                    </Stack>
-                </Container>
-            </Box>
-            <Container sx={style.mainContainer_Cards} maxWidth="md">
-                <Cards/>
-            </Container>
-            <HomeFooter/>
-        </main>
+        <div className={s.main_container}>
+            <div>
+                <User/>
+            </div>
+            <div className={s.post_block}>
+                <div className={s.post_block__input}>
+                    <TextField id="outlined-basic" label="Post" variant="outlined" />
+                </div>
+                <div className={s.post_block__posts}>posts</div>
+            </div>
+        </div>
     )
 }
