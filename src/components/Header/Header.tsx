@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useMemo } from "react"
 import AppBar from "@mui/material/AppBar"
 import Box from "@mui/material/Box"
 import Toolbar from "@mui/material/Toolbar"
@@ -6,6 +6,9 @@ import Typography from "@mui/material/Typography"
 import Button from "@mui/material/Button"
 import {useSelector} from "react-redux"
 import {RootState} from "../../redux/store"
+import { IconButton } from "@mui/material"
+import MenuIcon from '@mui/icons-material/Menu';
+import { useResize } from "../../helpers/windowResize"
 
 const style = {
     commonStyle: {
@@ -31,6 +34,29 @@ const style = {
 export const Header: React.FC = () => {
     const isLoginUser = useSelector<RootState, boolean | null>(state=>state.home.initUser)
 
+    const width = useResize()
+    const isMobile = width < 1000
+
+    const burgerMenu = useMemo(()=> {
+        if (isMobile) {
+            return <IconButton
+                size="large"
+                edge="start"
+                color="inherit"
+                aria-label="menu"
+                sx={{ mr: 2 }}
+            >
+                <MenuIcon />
+            </IconButton>
+        }
+    },[isMobile])
+
+    const logout = useMemo(()=>{
+        if (isLoginUser && !isMobile) {
+            return <Button variant={"contained"} color={"secondary"}>Logout</Button>
+        }
+    }, [isLoginUser, isMobile])
+
     return (
         <Box>
             <AppBar sx={style.commonStyle} position="static">
@@ -38,7 +64,8 @@ export const Header: React.FC = () => {
                     <Typography variant="h5" component="div" sx={style.siteTitle}>
                        <span>InCodeApp</span>
                     </Typography>
-                    {isLoginUser && <Button variant={"contained"} color={"secondary"}>Logout</Button>}
+                    {logout}
+                    {burgerMenu}
                 </Toolbar>
             </AppBar>
         </Box>

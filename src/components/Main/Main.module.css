@@ -1,3 +1,14 @@
 .main_container {
+    position: relative;
+    top: 70px;
+    left: 240px;
     width: calc(100% - 240px);
+}
+
+@media (max-width: 1000px) {
+    .main_container {
+        position: relative;
+        left: 0;
+        width: auto;
+    }
 }

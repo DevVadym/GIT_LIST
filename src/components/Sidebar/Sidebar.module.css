@@ -6,3 +6,9 @@
     height: 70px;
     padding: 0;
 }
+
+@media (max-width: 1000px) {
+    .sidebar.sidebar {
+      display: none;
+    }
+}
