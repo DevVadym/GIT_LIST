@@ -4,17 +4,18 @@ import Box from "@mui/material/Box"
 import Toolbar from "@mui/material/Toolbar"
 import Typography from "@mui/material/Typography"
 import Button from "@mui/material/Button"
-import {useSelector} from "react-redux"
-import {RootState} from "../../redux/store"
+import { useSelector } from "react-redux"
+import { RootState } from "../../redux/store"
 import { IconButton } from "@mui/material"
-import MenuIcon from '@mui/icons-material/Menu';
+import MenuIcon from "@mui/icons-material/Menu"
 import { useResize } from "../../helpers/windowResize"
+import { logoutF } from "../../API/userApi"
 
 const style = {
     commonStyle: {
         flexGrow: 1,
         width: "100%",
-        height:"70px",
+        height: "70px",
         zIndex: "2000",
         position: "fixed"
     },
@@ -25,35 +26,34 @@ const style = {
         position: "relative",
         height: "70px",
         width: "100%",
-        display:"flex",
-
+        display: "flex",
         alignItems: "center"
     }
 } as const
 
 export const Header: React.FC = () => {
-    const isLoginUser = useSelector<RootState, boolean | null>(state=>state.home.initUser)
+    const isLoginUser = useSelector<RootState, boolean | null>(state => state.home.initUser)
 
     const width = useResize()
     const isMobile = width < 1000
 
-    const burgerMenu = useMemo(()=> {
+    const burgerMenu = useMemo(() => {
         if (isMobile) {
             return <IconButton
                 size="large"
                 edge="start"
                 color="inherit"
                 aria-label="menu"
-                sx={{ mr: 2 }}
+                sx={{mr: 2}}
             >
-                <MenuIcon />
+                <MenuIcon/>
             </IconButton>
         }
-    },[isMobile])
+    }, [isMobile])
 
-    const logout = useMemo(()=>{
+    const logout = useMemo(() => {
         if (isLoginUser && !isMobile) {
-            return <Button variant={"contained"} color={"secondary"}>Logout</Button>
+            return <Button onClick={() => logoutF()} variant={"contained"} color={"secondary"}>Logout</Button>
         }
     }, [isLoginUser, isMobile])
 
@@ -62,7 +62,7 @@ export const Header: React.FC = () => {
             <AppBar sx={style.commonStyle} position="static">
                 <Toolbar>
                     <Typography variant="h5" component="div" sx={style.siteTitle}>
-                       <span>InCodeApp</span>
+                        <span>InCodeApp</span>
                     </Typography>
                     {logout}
                     {burgerMenu}

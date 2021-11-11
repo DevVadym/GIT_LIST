@@ -1,15 +1,40 @@
 .user_container {
 
 }
+
 .user_container > div {
     padding: 50px 50px;
 }
-.user_info_block {
+
+.user_block {
     display: flex;
     flex-direction: row-reverse;
     justify-content: space-between;
 }
+
+.user_avatar_block {
+    order: -1;
+}
+
 .avatar {
     width: 300px;
     border-radius: 50%;
+}
+
+.user_info_block {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+}
+.user_info_block div {
+    display: flex;
+    justify-content: space-between;
+}
+.user_info_block div > span {
+padding: 0 20px 0 0;
+}
+
+.user_about_block {
+
 }

@@ -14,6 +14,5 @@ export const Main: React.FC = () => {
                 <Route path={"/registration"} render={() => <Registration/>}/>
             </Switch>
         </div>
-
     )
 }

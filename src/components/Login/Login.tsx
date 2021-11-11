@@ -53,7 +53,7 @@ const style = {
 } as const
 
 export const Login: React.FC = () => {
-    let status = useSelector<RootState, StatusType>(state => state.login.status)
+    const status = useSelector<RootState, StatusType>(state => state.login.status)
     const isLoginUser = useSelector<RootState, boolean>(state => state.home.initUser)
 
     if (status === "finished" && isLoginUser) {

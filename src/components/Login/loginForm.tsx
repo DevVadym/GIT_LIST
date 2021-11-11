@@ -66,6 +66,7 @@ export const LoginForm: React.FC<LoginFormPropsType> = ({style}) => {
                     fullWidth
                     variant="contained"
                     sx={style}
+                    disabled={formik.values.password.length < 10}
                 >
                     Sign In
                 </Button>

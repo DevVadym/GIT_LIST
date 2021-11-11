@@ -1,13 +1,13 @@
 import { createSlice } from "@reduxjs/toolkit"
 import { userThunk } from "./userThunk"
-
+import { UserType } from "../../../API/userApi"
 
 export type initialStateType = {
-
+    user: UserType | null
 }
 
 const initialState: initialStateType = {
-
+    user: null
 }
 
 const userSlice = createSlice({
@@ -16,7 +16,7 @@ const userSlice = createSlice({
     reducers: {},
     extraReducers: (builder) => {
         builder.addCase(userThunk.fulfilled, (state, {payload}) => {
-
+            state.user = payload
         })
     }
 })

@@ -1,14 +1,14 @@
 import { createSlice } from "@reduxjs/toolkit"
 import { appThunk } from "./appThunk"
 
-type InitializeType = "success" | "false" | null
+export type InitializeType = "success" | "false" | null
 
 export type initialStateType = {
     initialize: InitializeType
 }
 
 const initialState: initialStateType = {
-    initialize: null,
+    initialize: null
 }
 
 const appSlice = createSlice({
@@ -17,7 +17,7 @@ const appSlice = createSlice({
     reducers: {},
     extraReducers: (builder) => {
         builder.addCase(appThunk.fulfilled, (state, {payload}) => {
-
+            state.initialize = payload
         })
     }
 })

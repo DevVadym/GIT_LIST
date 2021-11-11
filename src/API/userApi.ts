@@ -1,12 +1,10 @@
-import { v1 } from "uuid"
-
 export type UserType = {
     name: string
     last_name: string
     email: string
     tel: string
-    password: string
-    repeat_password: string
+    password?: string
+    repeat_password?: string
     date: string
     id: string
 }
@@ -23,13 +21,18 @@ export type LoginResponseType = {
     text: "success"
 }
 
-const createLoginToken = (data: string) => {
-    const token = {data, id: v1(), date: new Date().toLocaleTimeString()}
+export type TokenType = {
+    id: string
+    date: string
+}
+
+const createLoginToken = (data: string): void => {
+    const token: TokenType = {id: data, date: new Date().toLocaleTimeString()}
     localStorage.setItem("token", JSON.stringify(token))
 }
 
 const getUsersFromLs = (): UserType[] => {
-    let prevUsers = localStorage.getItem("users")
+    let prevUsers: string | null = localStorage.getItem("users")
     let users
     if (prevUsers) {
         users = JSON.parse(prevUsers)
@@ -55,25 +58,62 @@ const isUserRegistered = (data: LoginDataType): string | LoginResponseType => {
     let user = users.find(u => u.email === data.email && u.password === data.password)
     if (user) {
         localStorage.setItem("login_user", JSON.stringify(user))
+        if (data.rememberMe) {
+            createLoginToken(user.id)
+        }
         return {user, text: "success", rememberMe: data.rememberMe}
     } else {
         return "Failed login"
     }
 }
 
-const isUserLogin = () => {
+const isUserLogin = (): boolean => {
     let user = localStorage.getItem("login_user")
     return !!user
 }
 
+const getLoginUserFromLS = (): UserType| null => {
+    let userLS = localStorage.getItem("login_user")
+    let user: UserType | null
+    if (userLS) {
+        user = JSON.parse(userLS)
+    } else {
+        user = null
+    }
+    return user
+}
+
+const getLoginUser = (): UserType | null => {
+    return getLoginUserFromLS()
+}
+
+export const logoutF = (): void => {
+    localStorage.removeItem("token")
+    localStorage.removeItem("login_user")
+}
+
+const userToken = () => {
+    const tokenLS = localStorage.getItem("token")
+    let token: TokenType | boolean
+    if (tokenLS) {
+        token = JSON.parse(tokenLS)
+    } else {
+        token = false
+    }
+    return token
+}
+
 export const userApi = {
-    addUser(user: UserType) {
+    addUser(user: UserType): string {
         return addUserToLS(user)
     },
-    getUser(data: LoginDataType) {
+    getUser(data: LoginDataType): string | LoginResponseType {
         return isUserRegistered(data)
     },
-    initializeUser() {
+    initializeUser(): boolean {
         return isUserLogin()
+    },
+    setUser(): UserType | null {
+        return getLoginUser()
     }
 }

@@ -30,7 +30,7 @@ const loginSlice = createSlice({
             }else{
                 if (typeof payload !== "string") {
                     state.email = payload.user.email
-                    state.password = payload.user.password
+                    state.password = payload.user.password? payload.user.password: ""
                     state.rememberMe = payload.rememberMe
                     state.status = "finished"
                 }
