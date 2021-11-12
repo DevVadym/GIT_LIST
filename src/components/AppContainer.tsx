@@ -11,17 +11,18 @@ import Box from "@mui/material/Box"
 import { LinearProgress } from "@mui/material"
 import { homePageThunk } from "./Home/homePageSlice/homePageThunk"
 import { userThunk } from "./User/UserSlice/userThunk"
+import { UserType } from "../API/userApi"
 export const AppContainer: React.FC = () => {
-
-    const isLoginUser = useSelector<RootState, boolean>(state => state.home.initUser)
     const initialize = useSelector<RootState, InitializeType>(state => state.app.initialize)
+    const user = useSelector<RootState, UserType | null>(state => state.user.user)
+
     const dispatch = useDispatch()
 
     const sidebar = useMemo(() => {
-        if (isLoginUser) {
+        if (user) {
             return <Sidebar/>
         }
-    }, [isLoginUser])
+    }, [user])
 
     useEffect(() => {
         dispatch(userThunk())

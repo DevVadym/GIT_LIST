@@ -7,7 +7,7 @@ import { userThunk } from "./UserSlice/userThunk"
 
 export const User: React.FC = () => {
     const user = useSelector<RootState, UserType | null>(state => state.user.user)
-
+    console.log(user)
     const dispatch = useDispatch()
 
     useEffect(() => {

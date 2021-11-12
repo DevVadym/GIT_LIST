@@ -92,7 +92,7 @@ export const logoutF = (): void => {
     localStorage.removeItem("login_user")
 }
 
-const userToken = () => {
+const userToken = (): TokenType | boolean => {
     const tokenLS = localStorage.getItem("token")
     let token: TokenType | boolean
     if (tokenLS) {

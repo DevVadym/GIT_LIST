@@ -4,12 +4,13 @@ import Box from "@mui/material/Box"
 import Toolbar from "@mui/material/Toolbar"
 import Typography from "@mui/material/Typography"
 import Button from "@mui/material/Button"
-import { useSelector } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import { RootState } from "../../redux/store"
 import { IconButton } from "@mui/material"
 import MenuIcon from "@mui/icons-material/Menu"
 import { useResize } from "../../helpers/windowResize"
 import { logoutF } from "../../API/userApi"
+import { userThunk } from "../User/UserSlice/userThunk"
 
 const style = {
     commonStyle: {
@@ -33,6 +34,7 @@ const style = {
 
 export const Header: React.FC = () => {
     const isLoginUser = useSelector<RootState, boolean | null>(state => state.home.initUser)
+    const dispatch = useDispatch()
 
     const width = useResize()
     const isMobile = width < 1000
@@ -51,9 +53,14 @@ export const Header: React.FC = () => {
         }
     }, [isMobile])
 
+    const logoutHandler = () => {
+        logoutF()
+        dispatch(userThunk())
+    }
+
     const logout = useMemo(() => {
         if (isLoginUser && !isMobile) {
-            return <Button onClick={() => logoutF()} variant={"contained"} color={"secondary"}>Logout</Button>
+            return <Button onClick={logoutHandler} variant={"contained"} color={"secondary"}>Logout</Button>
         }
     }, [isLoginUser, isMobile])
 
