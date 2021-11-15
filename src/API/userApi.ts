@@ -72,7 +72,7 @@ const isUserLogin = (): boolean => {
     return !!user
 }
 
-const getLoginUserFromLS = (): UserType| null => {
+const getLoginUserFromLS = (): UserType | null => {
     let userLS = localStorage.getItem("login_user")
     let user: UserType | null
     if (userLS) {
@@ -88,17 +88,17 @@ const getLoginUser = (): UserType | null => {
 }
 
 export const logoutF = (): void => {
-    localStorage.removeItem("token")
     localStorage.removeItem("login_user")
+    localStorage.removeItem("token")
 }
 
-const userToken = (): TokenType | boolean => {
+export const userToken = (): TokenType | null => {
     const tokenLS = localStorage.getItem("token")
-    let token: TokenType | boolean
+    let token: TokenType | null
     if (tokenLS) {
         token = JSON.parse(tokenLS)
     } else {
-        token = false
+        token = null
     }
     return token
 }

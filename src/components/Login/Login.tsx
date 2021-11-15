@@ -57,7 +57,7 @@ export const Login: React.FC = () => {
     const isLoginUser = useSelector<RootState, boolean>(state => state.home.initUser)
 
     if (status === "finished" && isLoginUser) {
-        return <Redirect to={"/"}/>
+        return <Redirect to={"/profile"}/>
     }
 
     return (

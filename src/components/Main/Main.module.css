@@ -5,7 +5,7 @@
     width: calc(100% - 240px);
 }
 
-@media (max-width: 1000px) {
+@media (max-width: 1025px) {
     .main_container {
         position: relative;
         left: 0;
