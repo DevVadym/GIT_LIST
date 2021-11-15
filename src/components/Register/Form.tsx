@@ -3,10 +3,14 @@ import TextField from "@mui/material/TextField"
 import Button from "@mui/material/Button"
 import { useFormik } from "formik"
 import * as Yup from "yup"
+import { useDispatch } from "react-redux"
+import { addUserThunk } from "./registrationSlice/registrationThunk"
+import { v1 } from "uuid"
 
 export const Form = () => {
 
     const phoneRegExp = /^(\s*)?(\+)?([- _():=+]?\d[- _():=+]?){10,14}(\s*)?$/
+    const dispatch = useDispatch()
 
     let validationSchema = Yup.object().shape({
             name: Yup.string()
@@ -30,7 +34,6 @@ export const Form = () => {
             date: Yup.date()
         }
     )
-
     const formik = useFormik({
         initialValues: {
             name: "",
@@ -43,8 +46,9 @@ export const Form = () => {
         },
         validationSchema,
         onSubmit: (values, e) => {
+            let user = {...values, id: v1()}
             e.resetForm()
-            alert(JSON.stringify(values))
+            dispatch(addUserThunk(user))
         }
     })
 
