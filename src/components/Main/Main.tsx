@@ -1,7 +1,7 @@
 import React from "react"
-import { Route, Switch } from "react-router-dom"
+import { Redirect, Route, Switch } from "react-router-dom"
 import { Registration } from "../Register/Registration"
-import  {HomeContainer}  from "../Home/Home"
+import { HomeContainer } from "../Home/Home"
 import { Login } from "../Login/Login"
 import s from "./Main.module.css"
 import { MessagesContainer } from "../Messages/Messages"
@@ -18,6 +18,7 @@ export const Main: React.FC = () => {
                 <Route path={"/messages"} render={() => <MessagesContainer/>}/>
                 <Route path={"/users"} render={() => <UsersContainer/>}/>
                 <Route path={"/Settings"} render={() => <SettingsContainer/>}/>
+                <Redirect from={"*"} to={"/profile"}/>
             </Switch>
         </div>
     )
