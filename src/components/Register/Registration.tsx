@@ -1,0 +1,68 @@
+import React from "react"
+import CssBaseline from "@mui/material/CssBaseline"
+import Link from "@mui/material/Link"
+import Box from "@mui/material/Box"
+import Typography from "@mui/material/Typography"
+import Container from "@mui/material/Container"
+import { createTheme, ThemeProvider } from "@mui/material/styles"
+import { Form } from "./Form"
+import { useSelector } from "react-redux"
+import { RootState } from "../../redux/store"
+import { RegistrationSuccessType } from "./registrationSlice/registerSlice"
+import { Redirect, useHistory } from "react-router-dom"
+import { Button } from "@mui/material"
+
+function Copyright(props: any) {
+    return (
+        <Typography variant="body2" color="text.secondary" align="center" {...props}>
+            {"Copyright © "}
+            <Link color="inherit" href="https://mui.com/">
+                Your Website
+            </Link>{" "}
+            {new Date().getFullYear()}
+            {"."}
+        </Typography>
+    )
+}
+
+const theme = createTheme()
+
+export const Registration: React.FC = () => {
+    const history = useHistory()
+    const isRegister = useSelector<RootState, RegistrationSuccessType>(state => state.registration.isRegistrationSuccess)
+
+
+    const historyHandler = () =>{
+        history.push("/login")
+    }
+    if (isRegister === "success") {
+        return <Redirect to={"/login"}/>
+    }
+
+    return (
+        <div style={{display: "flex"}}>
+            <ThemeProvider theme={theme}>
+                <Container component="main" maxWidth={"xs"}>
+                    <CssBaseline/>
+                    <Box
+                        sx={{
+                            marginTop: 8,
+                            display: "flex",
+                            flexDirection: "column",
+                            alignItems: "center"
+                        }}
+                    >
+                        <Typography component="h1" variant="h5">
+                            Sign up
+                        </Typography>
+                        {isRegister === "false" &&
+                        <div style={{color: "red"}}>User already registered, please enter new data </div>}
+                        <Form/>
+                        <Button onClick={historyHandler} fullWidth variant={"contained"}>SIGN IN</Button>
+                    </Box>
+                    <Copyright sx={{mt: 8, mb: 4}}/>
+                </Container>
+            </ThemeProvider>
+        </div>
+    )
+}

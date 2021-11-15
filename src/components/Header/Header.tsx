@@ -1,32 +1,69 @@
-import React from "react";
-import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
-import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
-import Button from '@mui/material/Button';
-import IconButton from '@mui/material/IconButton';
-import MenuIcon from '@mui/icons-material/Menu';
+import React, { useMemo } from "react"
+import AppBar from "@mui/material/AppBar"
+import Box from "@mui/material/Box"
+import Toolbar from "@mui/material/Toolbar"
+import Typography from "@mui/material/Typography"
+import { useSelector } from "react-redux"
+import { RootState } from "../../redux/store"
+import { useResize } from "../../helpers/windowResize"
+import { useLogout } from "../../helpers/useLogout"
+import Button from "@mui/material/Button"
+import MobileMenu from "../MobileMenu/MobileMenu"
+
+const style = {
+    commonStyle: {
+        flexGrow: 1,
+        width: "100%",
+        height: "70px",
+        zIndex: "2000",
+        position: "fixed"
+    },
+    headerIconButton: {
+        mr: 2
+    },
+    siteTitle: {
+        position: "relative",
+        height: "70px",
+        width: "100%",
+        display: "flex",
+        alignItems: "center"
+    }
+} as const
+
 
 export const Header: React.FC = () => {
+    const isLoginUser = useSelector<RootState, boolean | null>(state => state.home.initUser)
+
+    const width = useResize()
+    const isMobile = width < 1025
+    const logout = useLogout()
+
+    const burgerMenu = useMemo(() => {
+        if (isMobile) {
+            return <MobileMenu/>
+        }
+        return null
+    }, [isMobile])
+
+
+    const logoutButton = useMemo(() => {
+        if (isLoginUser && !isMobile) {
+            return <Button onClick={logout} variant={"contained"} color={"secondary"}>Logout</Button>
+        }
+    }, [isLoginUser, isMobile, logout])
+
+
     return (
-        <Box sx={{flexGrow: 1}}>
-            <AppBar position="static">
+        <Box>
+            <AppBar sx={style.commonStyle} position="static">
                 <Toolbar>
-                    <IconButton
-                        size="large"
-                        edge="start"
-                        color="inherit"
-                        aria-label="menu"
-                        sx={{mr: 2}}
-                    >
-                        <MenuIcon/>
-                    </IconButton>
-                    <Typography variant="h6" component="div" sx={{flexGrow: 1}}>
-                        InCodeApp
+                    <Typography variant="h5" component="div" sx={style.siteTitle}>
+                        <span>InCodeApp</span>
                     </Typography>
-                    <Button color="inherit">Login</Button>
+                    {logoutButton}
+                    {burgerMenu}
                 </Toolbar>
             </AppBar>
         </Box>
-    );
+    )
 }
