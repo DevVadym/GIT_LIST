@@ -11,7 +11,7 @@ import Box from "@mui/material/Box"
 import { LinearProgress } from "@mui/material"
 import { homePageThunk } from "./Home/homePageSlice/homePageThunk"
 import { userThunk } from "./User/UserSlice/userThunk"
-import { userToken, UserType } from "../API/userApi"
+import { UserType } from "../API/userApi"
 import { useResize } from "../helpers/windowResize"
 
 export const AppContainer: React.FC = () => {
@@ -29,15 +29,6 @@ export const AppContainer: React.FC = () => {
     useEffect(() => {
         dispatch(userThunk())
     }, [])
-
-    useEffect(() => {
-        return () => {
-            let token = userToken()
-            if (!token) {
-                localStorage.removeItem("login_user")
-            }
-        }
-    }, [initialize])
 
     useEffect(() => {
         setTimeout(() => {

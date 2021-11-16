@@ -58,6 +58,7 @@ const isUserRegistered = (data: LoginDataType): string | LoginResponseType => {
     let user = users.find(u => u.email === data.email && u.password === data.password)
     if (user) {
         localStorage.setItem("login_user", JSON.stringify(user))
+        sessionStorage.setItem("login_user", JSON.stringify(user))
         if (data.rememberMe) {
             createLoginToken(user.id)
         }

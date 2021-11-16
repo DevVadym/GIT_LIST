@@ -61,7 +61,7 @@ export const Header: React.FC = () => {
             <AppBar sx={style.commonStyle} position="static">
                 <Toolbar>
                     <Typography variant="h5" component="div" sx={style.siteTitle}>
-                        <span>InCodeApp</span>
+                        <span>In-code Git List</span>
                     </Typography>
                     {logoutButton}
                     {burgerMenu}

@@ -6,11 +6,14 @@ import reportWebVitals from "./reportWebVitals"
 import { HashRouter } from "react-router-dom"
 import { Provider } from "react-redux"
 import { store } from "./redux/store"
+import { CookiesProvider } from "react-cookie"
 
 ReactDOM.render(
     <HashRouter>
         <Provider store={store}>
-            <AppContainer/>
+            <CookiesProvider>
+                <AppContainer/>
+            </CookiesProvider>
         </Provider>
     </HashRouter>,
     document.getElementById("root")

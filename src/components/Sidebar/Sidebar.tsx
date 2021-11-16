@@ -15,7 +15,7 @@ export const Sidebar: React.FC = () => {
             sx={{
                 width: drawerWidth,
                 flexShrink: 0,
-                [`& .MuiDrawer-paper`]: {width: drawerWidth, boxSizing: "border-box"}
+                [`& .MuiDrawer-paper`]: {width: drawerWidth, boxSizing: "border-box", backgroundImage: "linear-gradient(0deg, #FFDEE9 0%, #B5FFFC 100%)"},
             }}
             className={s.sidebar}
         >
