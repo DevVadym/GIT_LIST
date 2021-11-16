@@ -10,6 +10,8 @@ import { IconButton } from "@mui/material"
 import MenuIcon from "@mui/icons-material/Menu"
 import { components } from "../../helpers/MenuItems"
 import { useMenu } from "../../helpers/useMenu"
+import Button from "@mui/material/Button"
+import { useLogout } from "../../helpers/useLogout"
 
 type Anchor = "top"
 
@@ -18,6 +20,7 @@ export default function TemporaryDrawer() {
         top: false
     })
     const {color, getItemType} = useMenu()
+    const logout = useLogout()
 
     const toggleDrawer =
         (anchor: Anchor, open: boolean) =>
@@ -52,7 +55,7 @@ export default function TemporaryDrawer() {
             </List>
             <Divider/>
             <List>
-
+                <Button style={{margin:"0 0 0 15px"}} onClick={logout} variant={"contained"} color={"secondary"}>Logout</Button>
             </List>
         </Box>
     )
