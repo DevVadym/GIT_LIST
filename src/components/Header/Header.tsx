@@ -16,8 +16,10 @@ const style = {
         width: "100%",
         height: "70px",
         zIndex: "2000",
-        position: "fixed"
-    },
+        position: "fixed",
+        background: "linear-gradient(90deg, #cfecd0, #ffc5ca)"
+
+},
     headerIconButton: {
         mr: 2
     },
@@ -26,7 +28,8 @@ const style = {
         height: "70px",
         width: "100%",
         display: "flex",
-        alignItems: "center"
+        alignItems: "center",
+        color:"black"
     }
 } as const
 
@@ -39,11 +42,11 @@ export const Header: React.FC = () => {
     const logout = useLogout()
 
     const burgerMenu = useMemo(() => {
-        if (isMobile) {
+        if (isMobile && isLoginUser) {
             return <MobileMenu/>
         }
         return null
-    }, [isMobile])
+    }, [isMobile, isLoginUser])
 
 
     const logoutButton = useMemo(() => {
