@@ -1,5 +1,5 @@
 .user_container {
-
+    font-weight: bold;
 }
 
 .user_container > div {
@@ -17,7 +17,7 @@
 }
 
 .avatar {
-    width: 300px;
+    width: 200px;
     border-radius: 50%;
 }
 
@@ -25,16 +25,59 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-
 }
+
 .user_info_block div {
     display: flex;
     justify-content: space-between;
 }
+
 .user_info_block div > span {
-padding: 0 20px 0 0;
+    padding: 0 20px 0 0;
 }
 
 .user_about_block {
+
+}
+
+.post_block {
+    font-weight: normal;
+}
+
+.post_block__posts {
+    padding: 20px 0 0 0;
+}
+
+@media (max-width: 760px) {
+    .user_container {
+        background-color: #FFDEE9;
+        background-image: linear-gradient(0deg, #FFDEE9 0%, #B5FFFC 100%);
+    }
+    .user_block {
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    .user_info_block div {
+        flex-direction: row;
+    }
+
+    .user_avatar_block {
+        display: flex;
+        justify-content: center;
+    }
+
+    .user_info_block div {
+        padding: 10px 0 0 0;
+    }
+
+    .user_info_block > div {
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    .user_about_block {
+        padding: 50px 0 0 0;
+    }
 
 }
