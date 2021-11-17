@@ -31,11 +31,20 @@ const createLoginToken = (data: string): void => {
     localStorage.setItem("token", JSON.stringify(token))
 }
 
+const jsonParse = (text: string) => {
+  try {
+      return JSON.parse(text)
+  }
+  catch (e) {
+      return null
+  }
+}
+
 const getUsersFromLs = (): UserType[] => {
     let prevUsers: string | null = localStorage.getItem("users")
     let users
     if (prevUsers) {
-        users = JSON.parse(prevUsers)
+        users = jsonParse(prevUsers)
     }
     if (users === null || users === undefined) {
         users = [] as UserType[]
@@ -58,7 +67,6 @@ const isUserRegistered = (data: LoginDataType): string | LoginResponseType => {
     let user = users.find(u => u.email === data.email && u.password === data.password)
     if (user) {
         localStorage.setItem("login_user", JSON.stringify(user))
-        sessionStorage.setItem("login_user", JSON.stringify(user))
         if (data.rememberMe) {
             createLoginToken(user.id)
         }
@@ -97,7 +105,7 @@ export const userToken = (): TokenType | null => {
     const tokenLS = localStorage.getItem("token")
     let token: TokenType | null
     if (tokenLS) {
-        token = JSON.parse(tokenLS)
+        token = jsonParse(tokenLS)
     } else {
         token = null
     }

@@ -1,12 +1,11 @@
 import React, { ComponentType, FC } from "react"
 import { Redirect } from "react-router-dom"
-import { useSelector } from "react-redux"
-import { RootState } from "../redux/store"
+import { useTypedSelector } from "./useTypedSelector"
 
 export const withAuthentication = <P extends any>(
     Component: ComponentType<P>
 ): FC<P> => (props) => {
-    const isLoginUser = useSelector<RootState, boolean>(state => state.home.initUser)
+    const isLoginUser = useTypedSelector(state => state.homePageReducer.initUser)
     if (isLoginUser) {
         return <Component {...props} />
     }

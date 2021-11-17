@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useMemo } from "react"
 import TextField from "@mui/material/TextField"
 import FormControlLabel from "@mui/material/FormControlLabel"
 import Checkbox from "@mui/material/Checkbox"
@@ -10,17 +10,19 @@ import { useDispatch } from "react-redux"
 import { loginThunk } from "./loginSlice/loginThunk"
 import { NavLink } from "react-router-dom"
 import { homePageThunk } from "../Home/homePageSlice/homePageThunk"
+import { useCookies } from "react-cookie"
 
 type LoginFormPropsType = {
     style: any
 }
 export const LoginForm: React.FC<LoginFormPropsType> = ({style}) => {
     const dispatch = useDispatch()
+    const [cookies, setCookie] = useCookies(['user'])
 
     const formik = useFormik({
         initialValues: {
-            email: "",
-            password: "",
+            email: cookies.user? cookies.user.email: "",
+            password: cookies.user? cookies.user.password: "",
             rememberMe: false
         },
 
@@ -28,8 +30,25 @@ export const LoginForm: React.FC<LoginFormPropsType> = ({style}) => {
             e.resetForm()
             dispatch(loginThunk(values))
             dispatch(homePageThunk())
+            if (values.rememberMe){
+                setCookie("user", values, {path:"/", maxAge: 3600})
+            }
         }
     })
+
+    const checkBox = useMemo(()=>{
+        if (!cookies.user) {
+            return <FormControlLabel
+                control={
+                    <Checkbox
+                        {...formik.getFieldProps("rememberMe")}
+                        value="remember"
+                        color="primary"
+                    />}
+                label="Remember me"
+            />
+        }
+    },[cookies.user, formik])
 
     return (
         <>
@@ -52,15 +71,7 @@ export const LoginForm: React.FC<LoginFormPropsType> = ({style}) => {
                     type="password"
                     autoComplete="current-password"
                 />
-                <FormControlLabel
-                    control={
-                        <Checkbox
-                            {...formik.getFieldProps("rememberMe")}
-                            value="remember"
-                            color="primary"
-                        />}
-                    label="Remember me"
-                />
+                {checkBox}
                 <Button
                     type="submit"
                     fullWidth

@@ -3,12 +3,11 @@ import AppBar from "@mui/material/AppBar"
 import Box from "@mui/material/Box"
 import Toolbar from "@mui/material/Toolbar"
 import Typography from "@mui/material/Typography"
-import { useSelector } from "react-redux"
-import { RootState } from "../../redux/store"
 import { useResize } from "../../helpers/windowResize"
 import { useLogout } from "../../helpers/useLogout"
 import Button from "@mui/material/Button"
 import MobileMenu from "../MobileMenu/MobileMenu"
+import { useTypedSelector } from "../../helpers/useTypedSelector"
 
 const style = {
     commonStyle: {
@@ -35,7 +34,7 @@ const style = {
 
 
 export const Header: React.FC = () => {
-    const isLoginUser = useSelector<RootState, boolean | null>(state => state.home.initUser)
+    const isLoginUser = useTypedSelector(state => state.homePageReducer.initUser)
 
     const width = useResize()
     const isMobile = width < 1025

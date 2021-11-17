@@ -6,10 +6,10 @@ import * as Yup from "yup"
 import { useDispatch } from "react-redux"
 import { addUserThunk } from "./registrationSlice/registrationThunk"
 import { v1 } from "uuid"
+import { phoneRegExp } from "../../helpers/RegExp/regExp"
 
 export const Form = () => {
 
-    const phoneRegExp = /^(\s*)?(\+)?([- _():=+]?\d[- _():=+]?){10,14}(\s*)?$/
     const dispatch = useDispatch()
 
     let validationSchema = Yup.object().shape({
@@ -32,6 +32,7 @@ export const Form = () => {
                 .oneOf([Yup.ref("password"), null], "Passwords must match")
                 .required("Please confirm password"),
             date: Yup.date()
+                .max(new Date(Date.now() - 567648000000), "You must be at least 18 years")
         }
     )
     const formik = useFormik({
@@ -60,6 +61,7 @@ export const Form = () => {
                 fullWidth
                 label="Name"
                 autoFocus
+                required
                 error={!!formik.errors.name && formik.touched.name}
                 helperText={formik.touched.name && formik.errors.name}
             />
@@ -69,7 +71,7 @@ export const Form = () => {
                 margin="normal"
                 fullWidth
                 required
-                label="Last_name"
+                label="Last Name"
                 error={!!formik.errors.last_name && formik.touched.last_name}
                 helperText={formik.touched.last_name && formik.errors.last_name}
             />
@@ -77,6 +79,7 @@ export const Form = () => {
                 {...formik.getFieldProps("email")}
                 margin="normal"
                 fullWidth
+                required
                 label="Email Address"
                 error={!!formik.errors.email && formik.touched.email}
                 helperText={formik.touched.email && formik.errors.email}
@@ -85,7 +88,8 @@ export const Form = () => {
                 {...formik.getFieldProps("tel")}
                 margin="normal"
                 fullWidth
-                label="Tel number"
+                required
+                label="Tel Number"
                 error={!!formik.errors.tel && formik.touched.tel}
                 helperText={formik.touched.tel && formik.errors.tel}
             />
@@ -93,6 +97,7 @@ export const Form = () => {
                 {...formik.getFieldProps("password")}
                 margin="normal"
                 fullWidth
+                required
                 label="Password"
                 type="password"
                 error={!!formik.errors.password && formik.touched.password}
@@ -102,7 +107,8 @@ export const Form = () => {
                 {...formik.getFieldProps("repeat_password")}
                 margin="normal"
                 fullWidth
-                label="repeat_password"
+                required
+                label="Confirm Password"
                 type="password"
                 error={!!formik.errors.repeat_password && formik.touched.repeat_password}
                 helperText={formik.touched.repeat_password && formik.errors.repeat_password}

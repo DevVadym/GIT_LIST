@@ -15,9 +15,9 @@ export const useMenu = () => {
     const color = useCallback((type: string) => {
         if (active === type) {
             return "secondary"
-        } else {
-            return "inherit"
         }
+        return "inherit"
+
     }, [active])
     return {getItemType, color}
 }

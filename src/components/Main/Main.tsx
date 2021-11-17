@@ -4,16 +4,15 @@ import { Registration } from "../Register/Registration"
 import { HomeContainer } from "../Home/Home"
 import { Login } from "../Login/Login"
 import s from "./Main.module.css"
-import { MessagesContainer } from "../Messages/Messages"
 import { UsersContainer } from "../Users/Users"
 import { SettingsContainer } from "../Settings/Settings"
-import { useSelector } from "react-redux"
-import { RootState } from "../../redux/store"
-import { UserType } from "../../API/userApi"
+import { useTypedSelector } from "../../helpers/useTypedSelector"
+import { GitAccountsContainer } from "../Git/GitAccounts"
+import { UpWorkContainer } from "../UpWork/UpWork"
 
 export const Main: React.FC = () => {
-    const user = useSelector<RootState, UserType | null>(state => state.user.user)
 
+    const {user} = useTypedSelector(state => state.userReducer)
     const style = useCallback(() => {
         if (user) {
             return s.main_container
@@ -23,17 +22,16 @@ export const Main: React.FC = () => {
 
     return (
         <div className={style()}>
-            <div>
-                <Switch>
-                    <Route exact path={"/profile"} render={() => <HomeContainer/>}/>
-                    <Route path={"/login"} render={() => <Login/>}/>
-                    <Route path={"/registration"} render={() => <Registration/>}/>
-                    <Route path={"/messages"} render={() => <MessagesContainer/>}/>
-                    <Route path={"/users"} render={() => <UsersContainer/>}/>
-                    <Route path={"/Settings"} render={() => <SettingsContainer/>}/>
-                    <Redirect from={"*"} to={"/profile"}/>
-                </Switch>
-            </div>
+            <Switch>
+                <Route exact path={"/profile"} render={() => <HomeContainer/>}/>
+                <Route path={"/upwork"} render={() => <UpWorkContainer/>}/>
+                <Route path={"/login"} render={() => <Login/>}/>
+                <Route path={"/registration"} render={() => <Registration/>}/>
+                <Route path={"/gitLinks"} render={() => <GitAccountsContainer/>}/>
+                <Route path={"/users"} render={() => <UsersContainer/>}/>
+                <Route path={"/Settings"} render={() => <SettingsContainer/>}/>
+                <Redirect from={"*"} to={"/profile"}/>
+            </Switch>
         </div>
     )
 }

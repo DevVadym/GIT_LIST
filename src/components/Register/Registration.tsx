@@ -6,11 +6,9 @@ import Typography from "@mui/material/Typography"
 import Container from "@mui/material/Container"
 import { createTheme, ThemeProvider } from "@mui/material/styles"
 import { Form } from "./Form"
-import { useSelector } from "react-redux"
-import { RootState } from "../../redux/store"
-import { RegistrationSuccessType } from "./registrationSlice/registerSlice"
 import { Redirect, useHistory } from "react-router-dom"
 import { Button } from "@mui/material"
+import { useTypedSelector } from "../../helpers/useTypedSelector"
 
 function Copyright(props: any) {
     return (
@@ -29,8 +27,7 @@ const theme = createTheme()
 
 export const Registration: React.FC = () => {
     const history = useHistory()
-    const isRegister = useSelector<RootState, RegistrationSuccessType>(state => state.registration.isRegistrationSuccess)
-
+    const isRegister = useTypedSelector(state => state.registerReducer.isRegistrationSuccess);
 
     const historyHandler = () =>{
         history.push("/login")
@@ -58,7 +55,7 @@ export const Registration: React.FC = () => {
                         {isRegister === "false" &&
                         <div style={{color: "red"}}>User already registered, please enter new data </div>}
                         <Form/>
-                        <Button onClick={historyHandler} fullWidth variant={"contained"}>SIGN IN</Button>
+                        <Button onClick={historyHandler} fullWidth variant={"contained"}>Already have an account? {"<"}Sign In{">"}</Button>
                     </Box>
                     <Copyright sx={{mt: 8, mb: 4}}/>
                 </Container>

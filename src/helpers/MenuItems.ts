@@ -1,10 +1,17 @@
 import { v1 } from "uuid"
 import PersonIcon from "@mui/icons-material/Person"
-import MailIcon from "@mui/icons-material/Mail"
 import GroupIcon from "@mui/icons-material/Group"
 import SettingsIcon from "@mui/icons-material/Settings"
+import GitHubIcon from "@mui/icons-material/GitHub"
+import { UpWorkIcon } from "../SVG/UpWork"
 
 export const components = [
+    {
+        type: "upWork",
+        id: v1(),
+        Icon: UpWorkIcon,
+        primary: "Up Work"
+    },
     {
         type: "profile",
         id: v1(),
@@ -12,10 +19,10 @@ export const components = [
         primary: "Profile"
     },
     {
-        type: "messages",
+        type: "gitLinks",
         id: v1(),
-        Icon: MailIcon,
-        primary: "Messages"
+        Icon: GitHubIcon,
+        primary: "Git Links"
     },
     {
         type: "users",

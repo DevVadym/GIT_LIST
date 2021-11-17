@@ -8,10 +8,8 @@ import Typography from "@mui/material/Typography"
 import Container from "@mui/material/Container"
 import { createTheme, ThemeProvider } from "@mui/material/styles"
 import { LoginForm } from "./loginForm"
-import { useSelector } from "react-redux"
-import { RootState } from "../../redux/store"
-import { StatusType } from "./loginSlice/loginSlice"
 import { Redirect } from "react-router-dom"
+import { useTypedSelector } from "../../helpers/useTypedSelector"
 
 function Copyright(props: any) {
     return (
@@ -53,8 +51,8 @@ const style = {
 } as const
 
 export const Login: React.FC = () => {
-    const status = useSelector<RootState, StatusType>(state => state.login.status)
-    const isLoginUser = useSelector<RootState, boolean>(state => state.home.initUser)
+    const {status} = useTypedSelector(state => state.loginReducer)
+    const isLoginUser = useTypedSelector(state => state.homePageReducer.initUser)
 
     if (status === "finished" && isLoginUser) {
         return <Redirect to={"/profile"}/>
