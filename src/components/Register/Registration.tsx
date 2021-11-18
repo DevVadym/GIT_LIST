@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useEffect, useMemo, useState } from "react"
 import CssBaseline from "@mui/material/CssBaseline"
 import Link from "@mui/material/Link"
 import Box from "@mui/material/Box"
@@ -26,15 +26,20 @@ function Copyright(props: any) {
 const theme = createTheme()
 
 export const Registration: React.FC = () => {
-    const history = useHistory()
-    const isRegister = useTypedSelector(state => state.registerReducer.isRegistrationSuccess);
 
-    const historyHandler = () =>{
-        history.push("/login")
-    }
-    if (isRegister === "success") {
-        return <Redirect to={"/login"}/>
-    }
+    const isRegister = useTypedSelector(state => state.registerReducer.isRegistrationSuccess)
+    const [userRegStatus, setUserRegStatus] = useState("")
+
+    const userRegisteredStatus = useMemo(() => {
+        if (isRegister === "false") {
+            setUserRegStatus("User already registered, please enter new data")
+            return <div style={{color: "red"}}>{userRegStatus}</div>
+        }
+        if (isRegister === "success") {
+            setUserRegStatus("Registered success, please Sign In")
+            return <div style={{color: "blue"}}>{userRegStatus}</div>
+        }
+    }, [isRegister, userRegStatus])
 
     return (
         <div style={{display: "flex"}}>
@@ -52,10 +57,8 @@ export const Registration: React.FC = () => {
                         <Typography component="h1" variant="h5">
                             Sign up
                         </Typography>
-                        {isRegister === "false" &&
-                        <div style={{color: "red"}}>User already registered, please enter new data </div>}
+                        {userRegisteredStatus}
                         <Form/>
-                        <Button onClick={historyHandler} fullWidth variant={"contained"}>Already have an account? {"<"}Sign In{">"}</Button>
                     </Box>
                     <Copyright sx={{mt: 8, mb: 4}}/>
                 </Container>

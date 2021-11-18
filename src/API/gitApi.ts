@@ -5,3 +5,4 @@ export const gitApi = {
         return instance.get(`${nik}`)
     }
 }
+

@@ -1,9 +1,8 @@
 import axios from "axios"
 
 export const instance = axios.create({
-    baseURL: "https://api.github.com/users/",
+    baseURL: "https://api.github.com/search/users/",
     headers: {
-        "Access-Control-Allow-Origin": "*"
+        "Authorization": "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"
     },
-    withCredentials: true
 })

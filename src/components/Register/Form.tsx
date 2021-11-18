@@ -7,10 +7,15 @@ import { useDispatch } from "react-redux"
 import { addUserThunk } from "./registrationSlice/registrationThunk"
 import { v1 } from "uuid"
 import { phoneRegExp } from "../../helpers/RegExp/regExp"
+import { useHistory } from "react-router-dom"
 
 export const Form = () => {
-
     const dispatch = useDispatch()
+
+    const history = useHistory()
+    const historyHandler = () => {
+        history.push("/login")
+    }
 
     let validationSchema = Yup.object().shape({
             name: Yup.string()
@@ -133,6 +138,11 @@ export const Form = () => {
                 sx={{mt: 3, mb: 2}}
             >
                 Sign Up
+            </Button>
+            <Button onClick={historyHandler}
+                    fullWidth variant={"contained"}
+            >
+                Already have an account? {"<"}Sign In{">"}
             </Button>
         </form>
     )
