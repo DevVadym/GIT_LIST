@@ -6,9 +6,11 @@ import Typography from "@mui/material/Typography"
 import Container from "@mui/material/Container"
 import { createTheme, ThemeProvider } from "@mui/material/styles"
 import { Form } from "./Form"
-import { Redirect, useHistory } from "react-router-dom"
-import { Button } from "@mui/material"
 import { useTypedSelector } from "../../helpers/useTypedSelector"
+import { Redirect } from "react-router-dom"
+import { useDispatch } from "react-redux"
+import { clearIsRegSucc } from "./registrationSlice/registerSlice"
+import s from "./Registration.module.css"
 
 function Copyright(props: any) {
     return (
@@ -29,17 +31,26 @@ export const Registration: React.FC = () => {
 
     const isRegister = useTypedSelector(state => state.registerReducer.isRegistrationSuccess)
     const [userRegStatus, setUserRegStatus] = useState("")
+    const dispatch = useDispatch()
+
+    useEffect(() => {
+        dispatch(clearIsRegSucc())
+    }, [])
 
     const userRegisteredStatus = useMemo(() => {
         if (isRegister === "false") {
             setUserRegStatus("User already registered, please enter new data")
-            return <div style={{color: "red"}}>{userRegStatus}</div>
+            return <div className={s.un_register_user}>{userRegStatus}</div>
         }
         if (isRegister === "success") {
             setUserRegStatus("Registered success, please Sign In")
-            return <div style={{color: "blue"}}>{userRegStatus}</div>
+            return <div className={s.register_user}>{userRegStatus}</div>
         }
     }, [isRegister, userRegStatus])
+
+    if (isRegister === "success") {
+        return <Redirect to={"/login"}/>
+    }
 
     return (
         <div style={{display: "flex"}}>

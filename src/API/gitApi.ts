@@ -1,8 +1,9 @@
 import { instance } from "./instance"
 
 export const gitApi = {
-    getAccount(nik: string) {
-        return instance.get(`${nik}`)
+    getAccountEvents(nik: string) {
+        return instance.get(`users/${nik}/events`)
+            .then(res => res.data)
     }
 }
 

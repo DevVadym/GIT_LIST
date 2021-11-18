@@ -65,12 +65,10 @@ export const Form = () => {
                 margin="normal"
                 fullWidth
                 label="Name"
-                autoFocus
                 required
                 error={!!formik.errors.name && formik.touched.name}
                 helperText={formik.touched.name && formik.errors.name}
             />
-
             <TextField
                 {...formik.getFieldProps("last_name")}
                 margin="normal"
@@ -140,7 +138,8 @@ export const Form = () => {
                 Sign Up
             </Button>
             <Button onClick={historyHandler}
-                    fullWidth variant={"contained"}
+                    fullWidth
+                    variant={"contained"}
             >
                 Already have an account? {"<"}Sign In{">"}
             </Button>

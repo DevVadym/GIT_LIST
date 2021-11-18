@@ -27,7 +27,7 @@ export const Main: React.FC = () => {
                 <Route path={"/upwork"} render={() => <UpWorkContainer/>}/>
                 <Route path={"/login"} render={() => <Login/>}/>
                 <Route path={"/registration"} render={() => <Registration/>}/>
-                <Route path={"/gitLinks"} render={() => <GitAccountsContainer/>}/>
+                <Route path={"/gitAccounts"} render={() => <GitAccountsContainer/>}/>
                 <Route path={"/users"} render={() => <UsersContainer/>}/>
                 <Route path={"/Settings"} render={() => <SettingsContainer/>}/>
                 <Redirect from={"*"} to={"/profile"}/>

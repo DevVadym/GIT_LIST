@@ -6,7 +6,6 @@ export const addUserThunk = createAsyncThunk<string, UserType, { dispatch: AppDi
     "users/addUser",
     // Declare the type your function argument here:
     async (user: UserType, {dispatch, getState}) => {
-        const response = userApi.addUser(user)
-        return response
+        return userApi.addUser(user)
     }
 )
