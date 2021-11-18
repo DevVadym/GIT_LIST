@@ -1,19 +1,29 @@
 import React, { useEffect } from "react"
 import s from "./User.module.css"
-import { useDispatch, useSelector } from "react-redux"
-import { RootState } from "../../redux/store"
-import { UserType } from "../../API/userApi"
+import { useDispatch } from "react-redux"
 import { userThunk } from "./UserSlice/userThunk"
-import { TextField } from "@mui/material"
+import { Button, TextField } from "@mui/material"
+import { useFormik } from "formik"
+
+import { useTypedSelector } from "../../helpers/useTypedSelector"
 
 export const User: React.FC = () => {
-    const user = useSelector<RootState, UserType | null>(state => state.user.user)
+    const {user} = useTypedSelector(state => state.userReducer)
     const dispatch = useDispatch()
 
     useEffect(() => {
         dispatch(userThunk())
     }, [])
 
+    const formik = useFormik({
+        initialValues: {
+            userName: ""
+        },
+
+        onSubmit: (values, e) => {
+            e.resetForm()
+        }
+    })
     return (
         <div className={s.user_container}>
             <div className={s.user_block}>
@@ -51,9 +61,14 @@ export const User: React.FC = () => {
                 </div>
             </div>
             <div className={s.post_block}>
-                <div className={s.post_block__input}>
-                    <TextField id="outlined-basic" label="Post" variant="outlined"/>
-                </div>
+                <form className={s.post_block__input} onSubmit={formik.handleSubmit}>
+                    <TextField
+                        {...formik.getFieldProps("userName")}
+                        id="outlined-basic"
+                        label="Search user"
+                        variant="outlined"/>
+                    <Button type="submit">Search</Button>
+                </form>
                 <div className={s.post_block__posts}>posts</div>
             </div>
         </div>

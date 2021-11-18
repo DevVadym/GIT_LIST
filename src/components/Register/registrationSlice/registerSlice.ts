@@ -15,7 +15,11 @@ const initialState: initialStateType = {
 const registerSlice = createSlice({
     name: "registration",
     initialState,
-    reducers: {},
+    reducers: {
+        clearIsRegSucc(state) {
+            state.isRegistrationSuccess = null;
+        }
+    },
     extraReducers: (builder) => {
         builder.addCase(addUserThunk.fulfilled, (state, {payload}) => {
             let error = "User already registered"
@@ -34,6 +38,6 @@ const registerSlice = createSlice({
 })
 
 // Action creators are generated for each case reducer function
-//export const {} = registerSlice.actions
+export const {clearIsRegSucc} = registerSlice.actions
 
 export default registerSlice.reducer

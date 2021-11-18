@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useEffect, useMemo, useState } from "react"
 import CssBaseline from "@mui/material/CssBaseline"
 import Link from "@mui/material/Link"
 import Box from "@mui/material/Box"
@@ -6,11 +6,11 @@ import Typography from "@mui/material/Typography"
 import Container from "@mui/material/Container"
 import { createTheme, ThemeProvider } from "@mui/material/styles"
 import { Form } from "./Form"
-import { useSelector } from "react-redux"
-import { RootState } from "../../redux/store"
-import { RegistrationSuccessType } from "./registrationSlice/registerSlice"
-import { Redirect, useHistory } from "react-router-dom"
-import { Button } from "@mui/material"
+import { useTypedSelector } from "../../helpers/useTypedSelector"
+import { Redirect } from "react-router-dom"
+import { useDispatch } from "react-redux"
+import { clearIsRegSucc } from "./registrationSlice/registerSlice"
+import s from "./Registration.module.css"
 
 function Copyright(props: any) {
     return (
@@ -28,13 +28,26 @@ function Copyright(props: any) {
 const theme = createTheme()
 
 export const Registration: React.FC = () => {
-    const history = useHistory()
-    const isRegister = useSelector<RootState, RegistrationSuccessType>(state => state.registration.isRegistrationSuccess)
 
+    const isRegister = useTypedSelector(state => state.registerReducer.isRegistrationSuccess)
+    const [userRegStatus, setUserRegStatus] = useState("")
+    const dispatch = useDispatch()
 
-    const historyHandler = () =>{
-        history.push("/login")
-    }
+    useEffect(() => {
+        dispatch(clearIsRegSucc())
+    }, [])
+
+    const userRegisteredStatus = useMemo(() => {
+        if (isRegister === "false") {
+            setUserRegStatus("User already registered, please enter new data")
+            return <div className={s.un_register_user}>{userRegStatus}</div>
+        }
+        if (isRegister === "success") {
+            setUserRegStatus("Registered success, please Sign In")
+            return <div className={s.register_user}>{userRegStatus}</div>
+        }
+    }, [isRegister, userRegStatus])
+
     if (isRegister === "success") {
         return <Redirect to={"/login"}/>
     }
@@ -55,10 +68,8 @@ export const Registration: React.FC = () => {
                         <Typography component="h1" variant="h5">
                             Sign up
                         </Typography>
-                        {isRegister === "false" &&
-                        <div style={{color: "red"}}>User already registered, please enter new data </div>}
+                        {userRegisteredStatus}
                         <Form/>
-                        <Button onClick={historyHandler} fullWidth variant={"contained"}>SIGN IN</Button>
                     </Box>
                     <Copyright sx={{mt: 8, mb: 4}}/>
                 </Container>

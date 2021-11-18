@@ -3,20 +3,18 @@ import "../common/App.css"
 import { Header } from "./Header/Header"
 import { Sidebar } from "./Sidebar/Sidebar"
 import { Main } from "./Main/Main"
-import { useDispatch, useSelector } from "react-redux"
-import { RootState } from "../redux/store"
+import { useDispatch } from "react-redux"
 import { appThunk } from "./appThunk"
-import { InitializeType } from "./appSlice"
 import Box from "@mui/material/Box"
 import { LinearProgress } from "@mui/material"
 import { homePageThunk } from "./Home/homePageSlice/homePageThunk"
 import { userThunk } from "./User/UserSlice/userThunk"
-import { userToken, UserType } from "../API/userApi"
 import { useResize } from "../helpers/windowResize"
+import { useTypedSelector } from "../helpers/useTypedSelector"
 
 export const AppContainer: React.FC = () => {
-    const initialize = useSelector<RootState, InitializeType>(state => state.app.initialize)
-    const user = useSelector<RootState, UserType | null>(state => state.user.user)
+    const {user} = useTypedSelector(state => state.userReducer)
+    const {initialize} = useTypedSelector(state => state.appReducer)
     let width = useResize()
     const dispatch = useDispatch()
 
@@ -29,15 +27,6 @@ export const AppContainer: React.FC = () => {
     useEffect(() => {
         dispatch(userThunk())
     }, [])
-
-    useEffect(() => {
-        return () => {
-            let token = userToken()
-            if (!token) {
-                localStorage.removeItem("login_user")
-            }
-        }
-    }, [initialize])
 
     useEffect(() => {
         setTimeout(() => {
@@ -59,7 +48,7 @@ export const AppContainer: React.FC = () => {
                 <Main/>
             </div>
         </div>
-    }, [initialize, user, width, sidebar])
+    }, [initialize, sidebar])
 
     return content
 }
