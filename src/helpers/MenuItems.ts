@@ -1,9 +1,8 @@
 import { v1 } from "uuid"
 import PersonIcon from "@mui/icons-material/Person"
-import MailIcon from "@mui/icons-material/Mail"
 import GroupIcon from "@mui/icons-material/Group"
 import SettingsIcon from "@mui/icons-material/Settings"
-
+import GitHubIcon from "@mui/icons-material/GitHub"
 export const components = [
     {
         type: "profile",
@@ -12,10 +11,10 @@ export const components = [
         primary: "Profile"
     },
     {
-        type: "messages",
+        type: "gitAccounts",
         id: v1(),
-        Icon: MailIcon,
-        primary: "Messages"
+        Icon: GitHubIcon,
+        primary: "Git Accounts"
     },
     {
         type: "users",

@@ -31,31 +31,35 @@ const createLoginToken = (data: string): void => {
     localStorage.setItem("token", JSON.stringify(token))
 }
 
-const getUsersFromLs = (): UserType[] => {
+const getUsersFromLs = (): UserType[] | null => {
     let prevUsers: string | null = localStorage.getItem("users")
-    let users
     if (prevUsers) {
-        users = JSON.parse(prevUsers)
+        try {
+            return JSON.parse(prevUsers)
+        } catch (e) {
+            console.log("user not found")
+            return null
+        }
     }
-    if (users === null || users === undefined) {
-        users = [] as UserType[]
-    }
-    return users
+    return [] as UserType[]
 }
 
 const addUserToLS = (user: UserType): string => {
     let users = getUsersFromLs()
-    let isRegisteredUser = users.some((u: UserType) => u.name === user.name && u.email === user.email)
+    let isRegisteredUser = users?.some((u: UserType) => u.name === user.name && u.email === user.email)
     if (isRegisteredUser) {
-        return "User already registered" as string
+        return "User already registered"
     }
-    localStorage.setItem("users", JSON.stringify([...users, user]))
-    return "User successfully register" as string
+    if (users) {
+        localStorage.setItem("users", JSON.stringify([...users, user]))
+        return "User successfully register"
+    }
+    return "null"
 }
 
 const isUserRegistered = (data: LoginDataType): string | LoginResponseType => {
     let users = getUsersFromLs()
-    let user = users.find(u => u.email === data.email && u.password === data.password)
+    let user = users?.find((u: UserType) => u.email === data.email && u.password === data.password)
     if (user) {
         localStorage.setItem("login_user", JSON.stringify(user))
         if (data.rememberMe) {
@@ -72,15 +76,16 @@ const isUserLogin = (): boolean => {
     return !!user
 }
 
-const getLoginUserFromLS = (): UserType | null => {
+const getLoginUserFromLS = (): UserType | any => {
     let userLS = localStorage.getItem("login_user")
-    let user: UserType | null
     if (userLS) {
-        user = JSON.parse(userLS)
-    } else {
-        user = null
+        try {
+            return JSON.parse(userLS)
+        } catch (e) {
+            console.log("not find login user")
+            return null
+        }
     }
-    return user
 }
 
 const getLoginUser = (): UserType | null => {
@@ -94,13 +99,15 @@ export const logoutF = (): void => {
 
 export const userToken = (): TokenType | null => {
     const tokenLS = localStorage.getItem("token")
-    let token: TokenType | null
     if (tokenLS) {
-        token = JSON.parse(tokenLS)
-    } else {
-        token = null
+        try {
+            return JSON.parse(tokenLS)
+        } catch (e) {
+            console.log("token not created")
+            return null
+        }
     }
-    return token
+    return null
 }
 
 export const userApi = {
